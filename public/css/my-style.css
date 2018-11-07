@@ -1,0 +1,43 @@
+/*html{*/
+    /*position: relative;*/
+
+/*}*/
+/*change the color of navbar, this is also the main color of the forum*/
+.bg-green {
+    background-color: #18bc9c;
+}
+.top-margin {
+    margin-top: 30px;
+}
+
+.left-text{
+    margin-left: 0px;
+}
+
+.default-avatar{
+     font-size: 100px;
+ }
+
+.error-notification{
+    background-color: #e95353;
+}
+ .guest-footer{
+     position: fixed;
+     bottom: 0;
+     width: 100%;
+     /* Set the fixed height of the footer here */
+     /* Vertically center the text there */
+     background-color: #f5f5f5;
+ }
+
+ .center-text{
+    text-align: center;
+ }
+
+.tag-background{
+    background-color: #18bc9c;
+}
+
+.profile-description{
+    min-height: 200px;
+}
