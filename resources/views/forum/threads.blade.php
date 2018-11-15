@@ -9,29 +9,6 @@
 
     <!-- THIS IS WHERE THE MAIN BODY STARTED -->
     <div class="row">
-        <div class="col-12 col-md-2">
-        @guest
-            @else
-            <a href="/forum/create" class="btn btn-block btn-primary" role="button">Create Thread</a>
-            <br>
-        @endguest
-                <table class="table table-bordered table-hover" style="text-align: center;" >
-                    <thead>
-                    <tr>
-                        <th scope="col">Tags</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($allTags as $allTag)
-                    <tr>
-                        <td><a href="/tags/{{$allTag->name}}" >{{$allTag->name}} </a></td>
-                    </tr>
-                    @endforeach
-
-                    </tbody>
-                </table>
-        </div>
 
         <div class="col-12 col-md-9">
             @if(count($threads) == 0)
@@ -42,7 +19,11 @@
                 <div class="card-header ">
                     <div class="row">
                     <div class="col-6 col-md-6"><h5 >{{$thread->user->name}}</h5> </div>
-                    <div class="col-6 col-md-6 "> <span >Tags</span> </div>
+                    <div class="col-6 col-md-6 ">
+                        @foreach($thread->tags as $tag)
+                            <span class="tag-background" > {{$tag->name}}</span>
+                        @endforeach
+                    </div>
                 </div>
                 </div>
 
@@ -55,6 +36,7 @@
             </div>
                 <br>
                 @endforeach
+                {{$threads->links()}}
             @endif
             <div class="row">
                 <div class=" col-12 col-md-7 " style="position: fixed; bottom: 0; width: 100%;">
@@ -69,6 +51,32 @@
                     @endguest
                 </div>
             </div>
+        </div>
+
+        {{--For the right hand side--}}
+
+        <div class="col-12 col-md-2">
+            @guest
+            @else
+                <a href="/forum/create" class="btn btn-block btn-primary" role="button">Create Thread</a>
+                <br>
+                @endguest
+                <table class="table table-bordered table-hover" style="text-align: center;" >
+                    <thead>
+                    <tr class="bg-green ">
+                        <th scope="col" style="color: white">Tags</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($allTags as $allTag)
+                        <tr>
+                            <td><a href="/tags/{{$allTag->name}}" >{{$allTag->name}} </a></td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
         </div>
 
     </div>

@@ -22,7 +22,7 @@
 <div class="container-fluid">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-green">
-        <a class="navbar-brand" href="/">iHealthBoard</a>
+        <a class="navbar-brand" href="/"><img src="{{asset('favicon1.jpg')}}"  alt="ihealthboard" ></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,10 +32,14 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/forum">Forum</a>
                 </li>
-                <li class="nav-item">
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Ask Doctor</a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="#">Blog</a>
                 </li>
             </ul>
@@ -43,16 +47,16 @@
 
     {{--I COPIED THIS FROM THE DEFAULT INSTALLATION OF LARAVEL--}}
     @guest
-    <li class="nav-item">
+    <li class="nav-item active">
         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item active">
         @if (Route::has('register'))
             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
         @endif
     </li>
     @else
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown active">
             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }} <span class="caret"></span>
             </a>
@@ -72,7 +76,6 @@
         </li>
         @endguest
 
-
 </ul>
         </div>
     </nav>
@@ -80,5 +83,7 @@
         @yield('content')
 </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="{{asset('js/vue/multipleselect.js')}}"> </script>
 </body>
 </html>

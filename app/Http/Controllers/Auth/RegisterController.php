@@ -72,7 +72,8 @@ class RegisterController extends Controller
             'type' => User::DEFAULT_TYPE,
         ]);
 
-        Mail::to($user)->send(new WelcomeMail);
+//       dd($user->email);
+//        Mail::to($user)->send(new WelcomeMail);
 
         return $user;
     }

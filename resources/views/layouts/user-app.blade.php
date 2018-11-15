@@ -33,10 +33,13 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Forum</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/forum">Forum</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Ask Doctor</a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="#">Blog</a>
                 </li>
             </ul>
@@ -44,17 +47,17 @@
 
                 {{--I COPIED THIS FROM THE DEFAULT INSTALLATION OF LARAVEL--}}
                 @guest
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     @if (Route::has('register'))
                         <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                     @endif
                 </li>
                 @else
                     @if(Auth::user()->isAdmin())
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a class="nav-link" href="{{ route('admin') }}">{{ __('Admin Dashboard') }}</a>
                         </li>
                     @endif

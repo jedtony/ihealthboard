@@ -2,32 +2,38 @@
 @section('content')
 
     <div class="col-12 col-md-12">
+        <div id="root">
         <form method="POST" action="/thread" enctype="multipart/form-data">
         {{ csrf_field() }}
 
             <div class="form-group">
                 <label for="exampleInputEmail1">Topic</label>
                 <input type="text" class="form-control" name="title" id="inputTitle"
-                       aria-describedby="titleHelp" placeholder="Enter Topic" value="{{old('title')}}" required>
-                <small id="emailHelp" class="form-text text-muted">The number of letters remaining is: </small>
+                       aria-describedby="titleHelp" placeholder="Enter Topic" value="{{old('title')}}"
+                       v-model="messageTitle" maxlength="30" required>
+                <small id="emailHelp" class="form-text text-muted">The number of letters remaining is: @{{ 30 - messageTitle.length }} </small>
             </div>
 
             <textarea name="body" class="form-control" ></textarea>
 
-            <div class="form-group">
+            <div class="form-group" >
                 <label for="exampleFormControlSelect2">Tags</label>
-                <select multiple class="form-control" id="exampleFormControlSelect2" name="tags[]">
-                    @foreach($allTags as $allTag)
-                        <option value="{{$allTag->id}}" >{{$allTag->name}} </option>
-
-                    @endforeach
+                <select multiple="true" class="form-control"
+                        id="exampleFormControlSelect2" name="tags[]" v-model="multipleSelections">
+                    <option
+                            v-for="asset in assets"
+                            :value="asset">
+                        @{{asset}}
+                    </option>
                 </select>
                 <small id="emailHelp" class="form-text text-muted">You can select multiple tags</small>
+                <h5>Tags selected:</h5>  <span class="bg-green white-text">@{{multipleSelections }}</span>
             </div>
             <input type="submit">
         </form>
 
         @include('layouts.errors')
+        </div>
     </div>
 
     <script>

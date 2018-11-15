@@ -2,23 +2,17 @@
 
 @section('content')
     <div class="row">
-        <div class="col-12 col-md-3">
-            {{--<i class="fas fa-user-alt default-avatar"  ></i>--}}
-            <h3>
-               Posted by: {{$threadDetails->user->name}}
-            </h3>
-        </div>
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-9">
             <h3 class="card-title">{{$threadDetails->title}}</h3>
             <hr>
-            <div class="card ">
-                <div class="card-header ">
+            <div class="card">
+                <div class="card-header">
                     <div class="row">
                         <div class="col-6 col-md-6">
                             <h5 >{{$threadDetails->user->name}} posted {{$threadDetails->created_at->diffForHumans()}}</h5> </div>
                         <div class="col-6 col-md-6 ">
                             @foreach($threadDetails->tags as $tag)
-                                <span class="tag-background" > {{$tag->name}}</span>
+                                <span class="tag-background" style="color: white"> {{$tag->name}}</span>
                             @endforeach
 
                         </div>
@@ -30,30 +24,22 @@
                 </div>
             </div>
             <br>
-
-            @foreach($threadDetails->threadComments as $threadDetail)
+            {{--ADDED THIS BECAUSE OF PAGINATION--}}
+            <?php $comments = $threadDetails->threadComments()->paginate(5); ?>
+            @foreach($comments as  $comment)
             <div class="card">
-                <h5 class="card-header">{{$threadDetail->user->name}}</h5>
+                <h5 class="card-header">{{$comment->user->name}}</h5>
                 <div class="card-body">
-                    <p class="card-text">{!! $threadDetail->body !!}</p>
+                    <p class="card-text">{!! $comment->body !!}</p>
                 </div>
             </div>
             <br>
 
             @endforeach
 
+            {{$comments->links()}}
+
             @guest
-            <div class="row">
-                <div class=" col-12 col-md-7 " style="position: fixed; bottom: 0; width: 100%;">
-                    <form action="/guest-question" method="post">
-                        {{csrf_field()}}
-                        <input class="form-control form-control-sm" type="text" name="description" placeholder="ask any health question">
-                        <small id="emailHelp" class="form-text text-muted">You don't have to register to ask.</small>
-                        <button type="submit" class=" btn btn-primary " role="button">
-                            submit</button>
-                    </form>
-                </div>
-            </div>
             @else
                 <h5>Your comments here</h5>
                 <form method="POST" action="/comment" enctype="multipart/form-data">
@@ -62,16 +48,40 @@
                  <input name="thread_id" hidden value="{{$threadDetails->id}}">
                     <textarea name="body" class="form-control" ></textarea>
                     <br>
-                    <input type="submit">
+                    <button class="btn bg-green" style="color: #fff;" type="submit"> Submit </button>
                 </form>
 
                 @include('layouts.errors')
-
 
                 @endguest
 
         </div>
 
+        {{--For the right hand side--}}
+
+        <div class="col-12 col-md-3">
+            {{--<i class="fas fa-user-alt default-avatar"  ></i>--}}
+            <h3>
+                Posted by: {{$threadDetails->user->name}}
+            </h3>
+
+            <table class="table table-bordered table-hover" style="text-align: center;" >
+                <thead>
+                <tr class="bg-green ">
+                    <th scope="col" style="color: white">Tags</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($allTags as $allTag)
+                    <tr>
+                        <td><a href="/tags/{{$allTag->name}}" >{{$allTag->name}} </a></td>
+                    </tr>
+                @endforeach
+
+                </tbody>
+            </table>
+        </div>
         </div>
     <script>
         var route_prefix = "{{ url(config('lfm.url_prefix', config('lfm.prefix'))) }}";

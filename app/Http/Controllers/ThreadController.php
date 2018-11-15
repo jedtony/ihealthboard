@@ -17,7 +17,7 @@ class ThreadController extends Controller
     public function index()
     {
         //
-        $threads = Thread::all();
+        $threads = Thread::paginate(5);
         $allTags = Tag::all();
         return view('forum.threads', compact('threads', 'allTags'));
 
@@ -58,7 +58,8 @@ class ThreadController extends Controller
 //        dd($threadId->id);
 
             foreach ($tags as $tag) {
-                $threadId->tags()->attach($tag);
+                $realTag = Tag::where('name', $tag)->first();
+                $threadId->tags()->attach($realTag);
             }
         return redirect('/forum');
         //
@@ -77,7 +78,8 @@ class ThreadController extends Controller
 //        dd($thread->id);
 //        dd(Thread::find($thread->id));
         $threadDetails = Thread::find($thread->id);
-        return view('forum.thread-details', compact('threadDetails'));
+        $allTags = Tag::all();
+        return view('forum.thread-details', compact('threadDetails', 'allTags'));
     }
 
     /**

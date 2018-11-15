@@ -14,15 +14,15 @@
 Route::get('/viewui', function (){
     return view('forum.threads');
 });
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ThreadController@index');
 
 Route::get('/thread/{thread}', 'ThreadController@show');
 
 Route::get('/forum', 'ThreadController@index');
 
-Route::post('/thread', 'ThreadController@store');
+Route::get('/forum/1', 'ThreadController@index');
+
+Route::post('/thread', 'ThreadController@store')->middleware('auth');
 
 Route::get('/forum/create', "ThreadController@create")->middleware('auth');
 Route::post('/comment','ThreadCommentController@store');
